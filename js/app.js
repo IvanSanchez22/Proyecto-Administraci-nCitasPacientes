@@ -45,6 +45,69 @@ class UI {
         }, 5000)
 
     }
+
+    imprimirCitas({ citas }) { //Distructing desde la zona de los parámetros para extraer el array de citas de la clase citas ya que en la llamada le pasamos el objeto
+        this.limpiarHtml();
+
+        citas.forEach(cita => {
+            const { mascota, propietario, telefono, fecha, hora, sintomas, id } = cita;
+
+            const divCita = document.createElement('div');
+            divCita.classList.add('cita', 'p-3');
+            divCita.dataset.id = id;
+
+            //Scripting de los elementos
+            const mascotaParrafo = document.createElement('h2');
+            mascotaParrafo.classList.add('card-title', 'font-weight-bolder');
+            mascotaParrafo.textContent = mascota;
+
+            const propietarioParrafo = document.createElement('p');
+            propietarioParrafo.innerHTML = `
+            <span class="font-weight-bolder"> Propietario: </span> ${propietario}
+            `;
+            const telefonoParrafo = document.createElement('p');
+            telefonoParrafo.innerHTML = `
+            <span class="font-weight-bolder"> Teléfono: </span> ${telefono}
+            `;
+
+            const fechaParrafo = document.createElement('p');
+            fechaParrafo.innerHTML = `
+            <span class="font-weight-bolder"> Fecha: </span> ${fecha}
+            `;
+
+            const horaParrafo = document.createElement('p');
+            horaParrafo.innerHTML = `
+            <span class="font-weight-bolder"> Hora: </span> ${hora}
+            `;
+
+            const sintomasParrafo = document.createElement('p');
+            sintomasParrafo.innerHTML = `
+            <span class="font-weight-bolder"> Síntomas: </span> ${sintomas}
+            `;
+
+
+
+
+            //Añadiendo los párrafos a divCita
+            divCita.appendChild(mascotaParrafo);
+            divCita.appendChild(propietarioParrafo);
+            divCita.appendChild(telefonoParrafo);
+            divCita.appendChild(fechaParrafo);
+            divCita.appendChild(horaParrafo);
+            divCita.appendChild(sintomasParrafo);
+
+
+            //Añadiendo las citas al html
+            contenedorCitas.appendChild(divCita);
+
+        })
+    }
+
+    limpiarHtml() {
+        while (contenedorCitas.firstChild) {
+            contenedorCitas.removeChild(contenedorCitas.firstChild);
+        }
+    }
 }
 
 const ui = new UI();
@@ -102,16 +165,19 @@ function nuevaCita(e) {
 
     //Reiniciamos el formulario
     formulario.reset();
+
+    ui.imprimirCitas(administrarCitas);
+
 }
 
-function reiniciarObjeto (){
-    
-        citaObj.mascota = '';
-        citaObj.propietario = '';
-        citaObj.telefono = '';
-        citaObj.fecha = '';
-        citaObj.hora = '';
-        citaObj.sintomas = '';
-    
-    
+function reiniciarObjeto() {
+
+    citaObj.mascota = '';
+    citaObj.propietario = '';
+    citaObj.telefono = '';
+    citaObj.fecha = '';
+    citaObj.hora = '';
+    citaObj.sintomas = '';
+
+
 }
