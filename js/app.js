@@ -18,6 +18,10 @@ class Citas {
         this.citas = [...this.citas, cita];
     }
 
+    eliminarCitas(id) { 
+        this.citas = this.citas.filter(cita => cita.id !== id);
+    }
+
 }
 
 class UI {
@@ -42,7 +46,7 @@ class UI {
         //Quitar el mensaje de alerta a los 5 seg
         setTimeout(() => {
             divMensaje.remove();
-        }, 5000)
+        }, 3000)
 
     }
 
@@ -85,7 +89,11 @@ class UI {
             <span class="font-weight-bolder"> Síntomas: </span> ${sintomas}
             `;
 
-
+            //Botón para eliminar citas
+            const btnEliminar = document.createElement('button');
+            btnEliminar.classList.add('btn', 'btn-danger', 'mr-2'); //Clases de boostrap
+            btnEliminar.innerHTML = 'Eliminar'
+            btnEliminar.onclick = () => eliminarCitas(id);
 
 
             //Añadiendo los párrafos a divCita
@@ -95,6 +103,7 @@ class UI {
             divCita.appendChild(fechaParrafo);
             divCita.appendChild(horaParrafo);
             divCita.appendChild(sintomasParrafo);
+            divCita.appendChild(btnEliminar);
 
 
             //Añadiendo las citas al html
@@ -179,5 +188,14 @@ function reiniciarObjeto() {
     citaObj.hora = '';
     citaObj.sintomas = '';
 
+}
+
+function eliminarCitas(id) {
+    //Eliminar la cita
+    administrarCitas.eliminarCitas(id);
+    //Muestra un mensaje
+    ui.imprimirAlerta('La cita se eliminó correctamente');
+    //Refresca las citas
+    ui.imprimirCitas(administrarCitas); // Le pasamos el objeto entero
 
 }
