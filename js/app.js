@@ -24,6 +24,11 @@ class Citas {
         this.citas = this.citas.filter(cita => cita.id !== id);
     }
 
+    editarCitas(citaActualizada) {
+        this.citas = this.citas.map(cita => cita.id === citaActualizada.id ? citaActualizada: cita); //Usamos map ya que es como un for each pero crea una copia nueva del array
+        
+    }
+
 }
 
 class UI {
@@ -175,9 +180,11 @@ function nuevaCita(e) {
     if (editando) {
         ui.imprimirAlerta('Editado Correctamente');
         //Pasar el objeto cita a edición
+        administrarCitas.editarCitas({...citaObj}); //Le pasamos una copia del objeto
 
-
+        //Devuelve el texto del botón a su valor original
         formulario.querySelector('button[type="submit"]').textContent = 'Crear Cita';
+
         //Quitar modo edición
         editando = false;
 
